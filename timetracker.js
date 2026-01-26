@@ -40,6 +40,18 @@ const formatTime = (seconds) => {
     }
 }
 
+/**
+ * Update the title of the terminal/window
+ * @param { string } title 
+ */
+const setTerminalTitle = (title) => {
+    // if(process.platform == "win32") {
+        // process.title = title;
+    // } else {
+        process.stdout.write('\x1b]2;' + title + '\x1b\x5c');
+    // }
+}
+
 if(command === "start") {
     const project = subcommand;
 
@@ -58,7 +70,7 @@ if(command === "start") {
         console.clear();
         console.log('Tracking time for ' + project);
         console.log(timeStr);
-        process.title = timeStr + ' - ' + project;
+        setTerminalTitle(timeStr + ' - ' + project);
     }, 1000);
 
     /**
