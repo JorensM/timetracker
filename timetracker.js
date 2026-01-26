@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+// Todo: specify default directory to save logs to
+
 const fs = require('fs');
 const process = require('process');
 const readline = require('readline');
@@ -11,6 +15,9 @@ const argv = process.argv;
 const command = argv[2];
 
 const subcommand = argv[3];
+
+// Note: USERPROFILE is Windows specific
+const logsFolder = process.env.USERPROFILE + '/Documents/timetracker/';
 
 const timeDifference = (startTime, endTime) => {
     return endTime - startTime;
@@ -63,7 +70,7 @@ if(command === "start") {
         // const startTimeFormatted = 
         // const endTimeFormatted = formatTime()
         fs.writeFileSync(
-            './' + project + '.txt',
+            logsFolder + project + '.txt',
             endtime.toDateString() + ', ' +
             timeTrackedFormatted.hours + ':' +
             timeTrackedFormatted.minutes + ':' +

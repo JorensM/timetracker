@@ -1,3 +1,7 @@
 {
-    "displayName": "time-tracker"
+    "version": "0.1.0",
+    "name": "timetracker",
+    "bin": {
+        "timetracker": "timetracker.js"
+    }
 }
