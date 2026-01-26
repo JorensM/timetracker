@@ -50,18 +50,24 @@ if(command === "start") {
 
         const difference = msToSeconds(currTime - starttime);
         const formattedTime = formatTime(difference);
-        console.clear();
-        console.log('Tracking time for ' + project);
-        console.log(
-            formattedTime.hours + 
+        const timeStr = formattedTime.hours + 
             ':' + 
             formattedTime.minutes + 
             ':' + 
-            formattedTime.seconds
-        )
+            formattedTime.seconds;
+        console.clear();
+        console.log('Tracking time for ' + project);
+        console.log(timeStr);
+        process.title = timeStr + ' - ' + project;
     }, 1000);
 
-    const beforeExit = (code) => {
+    /**
+     * Code to run before exitting.
+     * Saves time entry to file.
+     * @param { object } options options
+     * @param { string } code exit code 
+     */
+    const beforeExit = (options, code) => {
         clearInterval(interval);
         console.log('Saving time log');
         const endtime = new Date();
@@ -79,17 +85,21 @@ if(command === "start") {
                 flag: 'a'
             }
         );
+        if(options.exit) process.exit();
     };
 
     process.stdin.on('keypress', (ch, key) => {
-        if(key.name === 'q') {
+        if(
+            key.name === 'q' || 
+            (key.name === 'c' && key.ctrl)
+        ) {
             process.exit();
         }
     })
 
-    process.on('exit', beforeExit);
+    process.on('exit', beforeExit.bind(null, {}));
     // process.on('beforeExit', beforeExit);
-    process.on('SIGINT', beforeExit);
+    process.on('SIGINT', beforeExit.bind(null, { exit: true }));
 
     // const logs = fs.readdirSync('./');
 }
