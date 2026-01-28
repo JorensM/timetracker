@@ -1,0 +1,1 @@
+* Include optional note with time entry
