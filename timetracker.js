@@ -52,8 +52,12 @@ const setTerminalTitle = (title) => {
     // }
 }
 
+const NOTE_ARG_POSITIOn = 4;
+
 if(command === "start") {
     const project = subcommand;
+
+    const note = argv[NOTE_ARG_POSITIOn] || "";
 
     const starttime = new Date();
 
@@ -92,7 +96,8 @@ if(command === "start") {
             endtime.toDateString() + ', ' +
             timeTrackedFormatted.hours + ':' +
             timeTrackedFormatted.minutes + ':' +
-            timeTrackedFormatted.seconds + '\n',
+            timeTrackedFormatted.seconds +
+            (note ? (', ' + note) : '') + '\n' ,
             {
                 flag: 'a'
             }
