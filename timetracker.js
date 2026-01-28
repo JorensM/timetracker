@@ -4,7 +4,9 @@
 
 const fs = require('fs');
 const process = require('process');
+const child_process = require('child_process');
 const readline = require('readline');
+const path = require('path');
 
 readline.emitKeypressEvents(process.stdin);
 
@@ -16,8 +18,11 @@ const command = argv[2];
 
 const subcommand = argv[3];
 
-// Note: USERPROFILE is Windows specific
-const logsFolder = process.env.USERPROFILE + '/Documents/timetracker/';
+/**
+ * Path to store logs
+ * Note: USERPROFILE is Windows specific
+ *  */ 
+const logsFolder = process.env.USERPROFILE + '\\Documents\\timetracker';
 
 const timeDifference = (startTime, endTime) => {
     return endTime - startTime;
@@ -119,6 +124,16 @@ if(command === "start") {
     process.on('SIGINT', beforeExit.bind(null, { exit: true }));
 
     // const logs = fs.readdirSync('./');
+} else if (command == "view") {
+    const project = subcommand;
+    if(project) {
+        const pathToFile = path.join(logsFolder, project + '.txt');
+        // console.log(pathToFile);
+        child_process.exec(pathToFile);
+    } else {
+        console.log(logsFolder);
+        child_process.exec("explorer " + logsFolder);
+    }
 }
 
 
