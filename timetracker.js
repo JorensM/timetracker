@@ -97,7 +97,7 @@ if(command === "start") {
         // const startTimeFormatted = 
         // const endTimeFormatted = formatTime()
         fs.writeFileSync(
-            logsFolder + project + '.txt',
+            path.join(logsFolder, project + '.txt'),
             endtime.toDateString() + ', ' +
             timeTrackedFormatted.hours + ':' +
             timeTrackedFormatted.minutes + ':' +
