@@ -59,6 +59,30 @@ const setTerminalTitle = (title) => {
 
 const NOTE_ARG_POSITIOn = 4;
 
+/**
+ * 
+ * @param { string } project
+ * @param {{
+ *   hours: number,
+ *   minutes: number,
+ *  seconds: number
+ * }} timeTrackedFormatted 
+ * @param { Date } date
+ */
+const saveEntry = (project, timeTrackedFormatted, note = undefined, date = new Date()) => {
+    fs.writeFileSync(
+            path.join(logsFolder, project + '.txt'),
+            date.toDateString() + ', ' +
+            timeTrackedFormatted.hours + ':' +
+            timeTrackedFormatted.minutes + ':' +
+            timeTrackedFormatted.seconds +
+            (note ? (', ' + note) : '') + '\n' ,
+            {
+                flag: 'a'
+            }
+        );
+}
+
 if(command === "start") {
     const project = subcommand;
 
@@ -96,17 +120,7 @@ if(command === "start") {
         const timeTrackedFormatted = formatTime(timeTracked);
         // const startTimeFormatted = 
         // const endTimeFormatted = formatTime()
-        fs.writeFileSync(
-            path.join(logsFolder, project + '.txt'),
-            endtime.toDateString() + ', ' +
-            timeTrackedFormatted.hours + ':' +
-            timeTrackedFormatted.minutes + ':' +
-            timeTrackedFormatted.seconds +
-            (note ? (', ' + note) : '') + '\n' ,
-            {
-                flag: 'a'
-            }
-        );
+        saveEntry(project, timeTrackedFormatted, note, endtime);
         if(options.exit) process.exit();
     };
 
@@ -134,6 +148,29 @@ if(command === "start") {
         console.log(logsFolder);
         child_process.exec("explorer " + logsFolder);
     }
+} else if (command == "entry") {
+    const project = subcommand;
+    const startTime = argv[4].split(':');
+    const endTime = argv[5].split(':');
+    const note = argv[6];
+
+    const startTimeHrs = parseInt(startTime[0]);
+    const startTimeMins = parseInt(startTime[1]);
+
+    const endTimeHrs = parseInt(endTime[0]);
+    const endTimeMins = parseInt(endTime[1]);
+
+    const startTimeMinsTotal = startTimeHrs * 60 + startTimeMins;
+    const endTimeMinsTotal = endTimeHrs * 60 + endTimeMins;
+
+    const startTimeSecondsTotal = startTimeMins * 60;
+    const endTimeSecondsTotal = endTimeMinsTotal * 60;
+
+    const timeTrackedSeconds = endTimeSecondsTotal - startTimeSecondsTotal;
+
+    const timeFormatted = formatTime(timeTrackedSeconds);
+
+    saveEntry(project, timeFormatted, note);
 }
 
 
