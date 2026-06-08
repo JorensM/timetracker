@@ -3,5 +3,8 @@
     "name": "timetracker",
     "bin": {
         "timetracker": "timetracker.js"
+    },
+    "scripts": {
+        "compile-win": "pkg timetracker.js -o build/timetracker -t node*-win-x64"
     }
 }
