@@ -1,0 +1,7 @@
+`timetracker help` - Display this document
+
+`timetracker start <label> <note>` - Start the timetracker
+
+`<label>` - a unique identifier that identifies the project you're working on, or some other way of categorizing your activity. Each label will have its own log file, respectively called `<label>.txt`
+
+`<note>` (optional) - an optional note to add to the particular time entry that you'll be tracking that will be appended to the time entry in the log file

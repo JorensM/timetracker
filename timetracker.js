@@ -171,6 +171,11 @@ if(command === "start") {
     const timeFormatted = formatTime(timeTrackedSeconds);
 
     saveEntry(project, timeFormatted, note);
+} else if (command == "help") {
+    const helpStr = 
+        fs.readFileSync("./documentation.txt")
+        .toString();
+    console.log(helpStr);
 }
 
 
