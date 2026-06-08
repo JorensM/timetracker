@@ -14,11 +14,7 @@ This will install the latest version of timetracker from the GitHub repository
 
 ## Usage
 
-`timetracker start <label> <note>`
-
-`<label>` is a unique identifier that identifies the project you're working on, or some other way of categorizing your activity. Each label will have its own log file, respectively called `<label>.txt`
-
-`<note>` (optional) an optional note to add to the particular time entry that you'll be tracking that will be appended to the time entry in the log file
+Commands can be found in `documentation.txt`
 
 ## Notes
 
