@@ -41,7 +41,7 @@ const formatTime = (seconds) => {
     return {
         hours,
         minutes,
-        seconds: _seconds.padStart(2, "0")
+        seconds: _seconds.toString().padStart(2, "0")
     }
 }
 
