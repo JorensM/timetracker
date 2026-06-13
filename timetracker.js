@@ -101,9 +101,12 @@ if(command === "start") {
             ':' + 
             formattedTime.seconds;
         console.clear();
-        console.log('Tracking time for ' + project);
+        console.log(
+            'Tracking time for ' + project + 
+            (note ? " - " + note : "")
+        );
         console.log(timeStr);
-        setTerminalTitle(timeStr + ' - ' + project);
+        setTerminalTitle([timeStr, project, note].join("-"));
     }, 1000);
 
     /**
